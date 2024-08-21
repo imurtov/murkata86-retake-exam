@@ -39,8 +39,9 @@ jobs:
     if: github.ref == 'refs/heads/main'
     needs: build_and_test
     steps:
-      - name: Deploy_In_Render
-        uses: johnbeynon/render-deploy-action@v0.0.8
+      - uses: actions/checkout@v3
+      - uses: JorgeLNJunior/render-deploy@v1.4.4
         with:
-          service-id: ${{ secrets.Service_Id_Key }}
-          api-key: ${{ secrets.Render_API_Key }}
+          service_id: ${{ secrets.Service_Id_Key }}
+          api_key: ${{ secrets.Render_API_Key }}
+          wait_deploy: true
