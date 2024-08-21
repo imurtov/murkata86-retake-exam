@@ -1,0 +1,31 @@
+name: Build Test and Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build_and_test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v4
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    - name: Install npm Dependencies
+      run: npm install
+    - name: Change the config
+      run: echo "export const settings = { host:\"http://localhost:8085\" }"
+    - name: Start Server
+      run: npm run start &
+    - name: Display SoftUni Username
+      run: echo "murkata86"
+    - name: Start the Unit tests
+      run: npm run test:unit
