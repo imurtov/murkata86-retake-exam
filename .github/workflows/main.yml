@@ -33,3 +33,14 @@ jobs:
       run: npx playwright install
     - name: Start the UI tests
       run: npm run test:ui
+
+  Deploy_App:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs: build_and_test
+    steps:
+      - name: Deploy_In_Render
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.Service_Id_Key }}
+          api-key: ${{ secrets.Render_API_Key }}
